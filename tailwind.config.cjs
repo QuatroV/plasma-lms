@@ -2,7 +2,14 @@
 module.exports = {
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    extend: {},
+    extend: {    
+      fontFamily: {
+        rubik: ['Rubik', 'sans-serif'],
+      }},
   },
-  plugins: [],
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  plugins: [ require('@tailwindcss/container-queries'),],
+
+  
 };
