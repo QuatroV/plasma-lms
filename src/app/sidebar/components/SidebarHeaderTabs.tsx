@@ -12,8 +12,8 @@ const tabs = [
 const SidebarHeaderTabs = () => {
   return (
     <div className="flex">
-      {tabs.map((tab) => (
-        <SidebarHeaderTab {...tab} />
+      {tabs.map((tab, idx) => (
+        <SidebarHeaderTab {...tab} key={idx} />
       ))}
     </div>
   );

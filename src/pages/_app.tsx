@@ -11,8 +11,9 @@ const MyApp: AppType<{ session: Session | null }> = ({
   Component,
   pageProps: { session, ...pageProps },
 }) => {
+  console.log({ session });
   return (
-    <SessionProvider session={session}>
+    <SessionProvider session={session} refetchInterval={5}>
       <Layout className="font-rubik">
         <Component {...pageProps} />
       </Layout>
