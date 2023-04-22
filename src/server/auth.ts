@@ -18,7 +18,7 @@ import { prisma } from "~/server/db";
 declare module "next-auth" {
   interface Session extends DefaultSession {
     user: {
-      id: string;
+      id?: string;
       // ...other properties
       // role: UserRole;
     } & DefaultSession["user"];
@@ -36,19 +36,20 @@ declare module "next-auth" {
  * @see https://next-auth.js.org/configuration/options
  */
 export const authOptions: NextAuthOptions = {
+  secret: process.env.NEXTAUTH_URL,
   session: {
     strategy: "jwt",
   },
-  // callbacks: {
-  //   session({ session, user }) {
-  //     // console.log("authOptions", { session, user });
-  //     // if (session.user) {
-  //     //   session.user.id = user.id;
-  //     //   // session.user.role = user.role; <-- put other properties on the session here
-  //     // }
-  //     return session;
-  //   },
-  // },
+  callbacks: {
+    session({ session, token }) {
+      console.log("authOptions", { session, token });
+      if (session.user) {
+        session.user.id = token.sub;
+        // session.user.role = user.role; <-- put other properties on the session here
+      }
+      return session;
+    },
+  },
   adapter: PrismaAdapter(prisma),
   providers: [
     CredentialsProvider({
@@ -81,6 +82,8 @@ export const authOptions: NextAuthOptions = {
           const newUser = await prisma.user.create({
             data: {
               name: credentials.name,
+              surname: "",
+              isBanned: false,
               email: credentials.email,
               password: credentials.password,
             },
