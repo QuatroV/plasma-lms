@@ -6,6 +6,7 @@ export type CourseInfo = Prisma.CourseGetPayload<{
   select: {
     id: true;
     name: true;
+    shortInfo: true;
     private: true;
   };
 }>;

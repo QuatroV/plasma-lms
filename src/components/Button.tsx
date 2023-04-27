@@ -23,7 +23,7 @@ const Button = ({ className, invalid, onClick, ...other }: Props) => {
     <button
       onClick={handleClick}
       className={clsxm(
-        "float-right rounded bg-white p-2 font-medium transition-all hover:shadow-lg active:outline active:outline-emerald-400",
+        "float-right rounded bg-white p-2 font-medium transition-all hover:shadow-lg active:outline active:outline-1 active:outline-emerald-400",
         shakeEffect && "animate-fast-shake",
         className
       )}

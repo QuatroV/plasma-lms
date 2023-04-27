@@ -71,6 +71,7 @@ model VerificationToken {
 model Course {
     id         String       @id @unique @default(cuid())
     name       String
+    shortInfo  String       @default("")
     private    Boolean?     @default(false)
     lessons    Lesson[]
     CourseUser CourseUser[]
