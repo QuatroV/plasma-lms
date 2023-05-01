@@ -3,7 +3,7 @@ import { ImBook } from "react-icons/im";
 import { HiBookmark } from "react-icons/hi";
 import SidebarHeaderTab from "./SidebarHeaderTab";
 
-import { IoArrowBackOutline } from "react-icons/io5";
+import { AiOutlineSearch } from "react-icons/ai";
 import usePagesStore from "~/stores/pageStore";
 
 const tabs = [
@@ -21,7 +21,7 @@ const SidebarHeaderTabs = () => {
 
   return (
     <div className="flex items-center">
-      <IoArrowBackOutline
+      <AiOutlineSearch
         className="cursor-pointer"
         size={18}
         onClick={handleClick}

@@ -27,6 +27,8 @@ const CourseInfo = (): JSX.Element | null => {
     setJoined(joined);
   }
 
+  console.log({ currentCourse });
+
   if (!currentCourse) {
     return null;
   }

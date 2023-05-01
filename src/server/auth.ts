@@ -42,7 +42,6 @@ export const authOptions: NextAuthOptions = {
   },
   callbacks: {
     session({ session, token }) {
-      console.log("authOptions", { session, token });
       if (session.user) {
         session.user.id = token.sub;
         // session.user.role = user.role; <-- put other properties on the session here
@@ -103,8 +102,6 @@ export const authOptions: NextAuthOptions = {
         if (!user) {
           return null;
         }
-
-        console.log({ name: user.name, id: user.id, email: user.email });
 
         return { name: user.name, id: user.id, email: user.email };
       },

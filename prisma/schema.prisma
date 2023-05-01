@@ -79,8 +79,9 @@ model Course {
 
 model Lesson {
     id       String  @id @unique @default(cuid())
+    name     String  @default("")
     tasks    Task[]
-    content  Json?
+    content  String?
     Course   Course? @relation(fields: [courseId], references: [id])
     courseId String?
 }

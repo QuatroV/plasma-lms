@@ -21,6 +21,7 @@ export const courseRouter = createTRPCRouter({
           name: true,
           shortInfo: true,
           private: true,
+          lessons: true,
         },
       });
 

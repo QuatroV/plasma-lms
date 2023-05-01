@@ -1,10 +1,12 @@
 import usePagesStore from "~/stores/pageStore";
 import SearchSidebarContent from "./SearchSidebarContent";
 import CourseSidebarContent from "./CourseSidebarContent";
+import LessonSidebarContent from "./LessonSidebarContent";
 
 const sidebarContent = {
   search: <SearchSidebarContent />,
   course: <CourseSidebarContent />,
+  lesson: <LessonSidebarContent />,
 };
 
 const Sidebar = () => {

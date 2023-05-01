@@ -8,6 +8,7 @@ export type CourseInfo = Prisma.CourseGetPayload<{
     name: true;
     shortInfo: true;
     private: true;
+    lessons: true;
   };
 }>;
 

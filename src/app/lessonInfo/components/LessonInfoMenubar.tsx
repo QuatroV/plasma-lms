@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { AiOutlineRead } from "react-icons/ai";
 import { GrEdit } from "react-icons/gr";
 import Toggle from "~/components/Toggle";
@@ -11,8 +11,12 @@ const LessonMenubarToggleOptions = {
   off: { label: "Learn", Icon: <AiOutlineRead size={18} /> },
 };
 
-const LessonInfoMenubar = () => {
-  const [mode, setMode] = useState<"read" | "write">("read");
+type Props = {
+  mode: "write" | "read";
+  setMode: Dispatch<SetStateAction<"read" | "write">>;
+};
+
+const LessonInfoMenubar = ({ mode, setMode }: Props) => {
   return (
     <div className="mb-4 flex">
       <div
