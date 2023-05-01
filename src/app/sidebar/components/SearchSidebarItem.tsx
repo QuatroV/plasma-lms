@@ -1,24 +1,24 @@
 import useCourseStore from "~/stores/courseStore";
 import usePagesStore from "~/stores/pageStore";
-import { CourseInfo } from "~/stores/searchStore";
+import { SearchCourseInfo } from "~/stores/searchStore";
 import clsxm from "~/utils/clsxm";
 
 type Props = {
   isFirst?: boolean;
   isLast?: boolean;
-  item: CourseInfo;
+  item: SearchCourseInfo;
 };
 
 const SearchSidebarItem = ({ isFirst, isLast, item }: Props) => {
   const { name, private: isPrivate } = item;
 
+  const currentCourseId = useCourseStore((state) => state.currentCourse?.id);
   const setCurrentCourse = useCourseStore((state) => state.setCurrentCourse);
 
-  const setCurrentPage = usePagesStore((state) => state.setCurrentPage);
+  const isCurrentltySelected = currentCourseId === item.id;
 
   const handleClick = () => {
     setCurrentCourse(item);
-    setCurrentPage("course");
   };
 
   return (
@@ -26,7 +26,8 @@ const SearchSidebarItem = ({ isFirst, isLast, item }: Props) => {
       className={clsxm(
         " flex h-14 cursor-pointer items-center gap-2 border-2 border-b bg-gray-100 p-1 transition-all active:bg-gray-300 active:shadow-inner",
         isFirst && "rounded-t-xl",
-        isLast && "rounded-b-xl"
+        isLast && "rounded-b-xl",
+        isCurrentltySelected && "bg-gray-300"
       )}
       onClick={handleClick}
     >

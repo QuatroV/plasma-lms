@@ -1,6 +1,10 @@
 import { z } from "zod";
 
-import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
+import {
+  createTRPCRouter,
+  protectedProcedure,
+  publicProcedure,
+} from "~/server/api/trpc";
 
 export const courseRouter = createTRPCRouter({
   search: protectedProcedure
@@ -121,4 +125,11 @@ export const courseRouter = createTRPCRouter({
         },
       });
     }),
+
+  mainPage: publicProcedure.query(async ({ input, ctx }) => {
+    return ctx.prisma.course.findMany({
+      where: { private: false },
+      take: 4,
+    });
+  }),
 });

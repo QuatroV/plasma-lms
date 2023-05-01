@@ -1,11 +1,22 @@
-import { ChangeEventHandler, useEffect, useState } from "react";
+import {
+  ChangeEventHandler,
+  MouseEventHandler,
+  useEffect,
+  useState,
+} from "react";
 import { AiOutlineSearch } from "react-icons/ai";
+import { MdOutlineClear } from "react-icons/md";
 import Input from "~/components/Input";
 import useSearchStore from "~/stores/searchStore";
 import { api } from "~/utils/api";
 
 const SearchSidebarHeader = () => {
-  const [searchPhrase, setSearchPhrase] = useState("");
+  const searchPhrase = useSearchStore((state) => state.searchQuery);
+  const setSearchPhrase = useSearchStore((state) => state.setSearchQuery);
+
+  useEffect(() => {
+    setSearchPhrase(localStorage.getItem("lastSearchPhrase") || "");
+  }, []);
 
   const searchQuery = api.course.search.useQuery(
     { phrase: searchPhrase },
@@ -19,7 +30,13 @@ const SearchSidebarHeader = () => {
   }
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    localStorage.setItem("lastSearchPhrase", e.target.value);
     setSearchPhrase(e.target.value);
+  };
+
+  const handleClear: MouseEventHandler<SVGElement> = () => {
+    localStorage.setItem("lastSearchPhrase", "");
+    setSearchPhrase("");
   };
 
   return (
@@ -28,7 +45,16 @@ const SearchSidebarHeader = () => {
         Explore courses
       </label>
       <div className="relative w-full">
-        <AiOutlineSearch size="16" className="absolute top-[6px] right-2" />
+        {searchPhrase ? (
+          <MdOutlineClear
+            size="16"
+            onClick={handleClear}
+            className="absolute top-[6px] right-2 cursor-pointer"
+          />
+        ) : (
+          <AiOutlineSearch size="16" className="absolute top-[6px] right-2" />
+        )}
+
         <Input
           value={searchPhrase}
           onChange={handleChange}
