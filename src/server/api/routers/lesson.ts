@@ -22,11 +22,52 @@ export const lessonRouter = createTRPCRouter({
       });
     }),
 
-  create: protectedProcedure.mutation(async ({ ctx }) => {
-    const createdLesson = await ctx.prisma.lesson.create({
-      data: {},
-    });
+  create: protectedProcedure
+    .input(z.object({ name: z.string(), courseId: z.string() }))
+    .mutation(async ({ input, ctx }) => {
+      const createdLesson = await ctx.prisma.lesson.create({
+        data: {
+          name: input.name,
+        },
+      });
 
-    return createdLesson;
-  }),
+      const updatedCourse = await ctx.prisma.course.update({
+        where: {
+          id: input.courseId,
+        },
+        data: {
+          lessons: {
+            connect: {
+              id: createdLesson.id,
+            },
+          },
+        },
+        include: {
+          lessons: true,
+        },
+      });
+
+      return updatedCourse;
+    }),
+
+  delete: protectedProcedure
+    .input(z.object({ courseId: z.string(), lessonId: z.string() }))
+    .mutation(async ({ input, ctx }) => {
+      await ctx.prisma.lesson.delete({
+        where: {
+          id: input.lessonId,
+        },
+      });
+
+      const updatedCourse = await ctx.prisma.course.findFirst({
+        where: {
+          id: input.courseId,
+        },
+        include: {
+          lessons: true,
+        },
+      });
+
+      return updatedCourse;
+    }),
 });

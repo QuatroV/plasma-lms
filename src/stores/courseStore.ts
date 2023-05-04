@@ -49,6 +49,9 @@ interface courseState {
 
   users: UserWithRole[];
   setUsers: (users: UserWithRole[]) => void;
+
+  addLessonModalOpen: boolean;
+  setAddLessonModalOpen: (addLessonModalOpen: boolean) => void;
 }
 
 const useCourseStore = create<courseState>()(
@@ -89,8 +92,12 @@ const useCourseStore = create<courseState>()(
           editedCurrentCourse: newEditedCourseState,
         };
       }),
+
     users: [],
     setUsers: (users) => set({ users }),
+
+    addLessonModalOpen: false,
+    setAddLessonModalOpen: (addLessonModalOpen) => set({ addLessonModalOpen }),
   }))
 );
 

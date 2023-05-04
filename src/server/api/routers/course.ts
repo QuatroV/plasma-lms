@@ -214,6 +214,9 @@ export const courseRouter = createTRPCRouter({
           shortInfo: input.shortInfo,
           private: input.private,
         },
+        include: {
+          lessons: true,
+        },
       });
 
       return updatedCourse;

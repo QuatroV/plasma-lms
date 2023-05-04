@@ -7,6 +7,10 @@ import CourseInfoLesson from "./CourseInfoLesson";
 const CourseInfoLessons = () => {
   const lessons = useCourseStore((state) => state.currentCourse?.lessons);
   const editMode = useCourseStore((state) => state.editMode);
+  const setAddLessonModalOpen = useCourseStore(
+    (state) => state.setAddLessonModalOpen
+  );
+
   return (
     <div className="flex-1">
       <div className="flex items-center gap-2 rounded-t-xl bg-white p-2 font-bold shadow">
@@ -16,7 +20,10 @@ const CourseInfoLessons = () => {
 
       <div className="bg-glass flex flex-initial flex-col items-start gap-2 rounded-b-xl p-2 text-sm">
         {editMode ? (
-          <Button className="flex items-center gap-2 py-1">
+          <Button
+            onClick={() => setAddLessonModalOpen(true)}
+            className="flex items-center gap-2 py-1"
+          >
             <GrAdd />
             Add Lesson
           </Button>

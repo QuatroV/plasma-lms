@@ -61,7 +61,7 @@ const CourseInfoButtons = ({ isPrivate, courseId }: Props) => {
         editedCurrentCourse
       );
 
-      setCurrentCourse({ ...updatedCourse, lessons: [] });
+      setCurrentCourse(updatedCourse);
     }
 
     setEditMode(false);
