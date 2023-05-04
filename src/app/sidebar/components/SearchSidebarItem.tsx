@@ -1,5 +1,4 @@
 import useCourseStore from "~/stores/courseStore";
-import usePagesStore from "~/stores/pageStore";
 import { SearchCourseInfo } from "~/stores/searchStore";
 import clsxm from "~/utils/clsxm";
 
@@ -9,16 +8,32 @@ type Props = {
   item: SearchCourseInfo;
 };
 
+type UserInfo = {
+  name: string | null;
+};
+
 const SearchSidebarItem = ({ isFirst, isLast, item }: Props) => {
-  const { name, private: isPrivate } = item;
+  const { name, private: isPrivate, CourseUser: CourseUsers } = item;
+
+  let user: UserInfo | undefined = undefined;
+
+  if (CourseUsers?.length > 0) {
+    user = CourseUsers[0]?.user;
+  }
 
   const currentCourseId = useCourseStore((state) => state.currentCourse?.id);
   const setCurrentCourse = useCourseStore((state) => state.setCurrentCourse);
+  const setEditedCurrentCourse = useCourseStore(
+    (state) => state.setEditedCurrentCourse
+  );
+  const setEditMode = useCourseStore((state) => state.setEditMode);
 
   const isCurrentltySelected = currentCourseId === item.id;
 
   const handleClick = () => {
-    setCurrentCourse(item);
+    setEditMode(false);
+    setCurrentCourse({ ...item, shortInfo: "", lessons: [] });
+    setEditedCurrentCourse({ ...item, shortInfo: "", lessons: [] });
   };
 
   return (
@@ -41,7 +56,9 @@ const SearchSidebarItem = ({ isFirst, isLast, item }: Props) => {
             </span>
           ) : null}
         </p>
-        <p className="text-xs text-gray-500">Creator: John Snow</p>
+        <p className="text-xs text-gray-500">
+          Creator: {user?.name || "Unknown"}
+        </p>
       </div>
     </div>
   );

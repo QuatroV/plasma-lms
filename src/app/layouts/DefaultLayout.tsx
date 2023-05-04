@@ -23,7 +23,7 @@ const DefaultLayout = ({ className = "", children, ...other }: Props) => {
         <ProfileModal />
         <AuthModal />
         <Header />
-        <div className="flex flex-1">
+        <div className="flex flex-1 overflow-hidden">
           <Sidebar />
           {children}
         </div>

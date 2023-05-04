@@ -1,10 +1,6 @@
 import { z } from "zod";
 
-import {
-  createTRPCRouter,
-  publicProcedure,
-  protectedProcedure,
-} from "~/server/api/trpc";
+import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 
 export const lessonRouter = createTRPCRouter({
   show: protectedProcedure
@@ -12,6 +8,7 @@ export const lessonRouter = createTRPCRouter({
     .query(async ({ input, ctx }) => {
       return ctx.prisma.lesson.findFirst({ where: { id: input.lessonId } });
     }),
+
   editContent: protectedProcedure
     .input(z.object({ lessonId: z.string(), content: z.string() }))
     .mutation(async ({ input, ctx }) => {
@@ -24,4 +21,12 @@ export const lessonRouter = createTRPCRouter({
         },
       });
     }),
+
+  create: protectedProcedure.mutation(async ({ ctx }) => {
+    const createdLesson = await ctx.prisma.lesson.create({
+      data: {},
+    });
+
+    return createdLesson;
+  }),
 });

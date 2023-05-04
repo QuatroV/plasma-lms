@@ -1,8 +1,12 @@
 import { useRouter } from "next/router";
 import { BiArrowBack } from "react-icons/bi";
+import useLessonStore from "~/stores/lessonStore";
 
 const LessonInfoHeader = () => {
   const router = useRouter();
+
+  const lesson = useLessonStore((state) => state.lesson);
+
   return (
     <div className="flex items-center justify-between gap-2">
       <div className=" bg-glass flex flex-1 items-center gap-2 rounded-xl p-2">
@@ -12,7 +16,10 @@ const LessonInfoHeader = () => {
         >
           <BiArrowBack size={34} />
         </div>
-        <h1 className="text-2xl font-bold">1. Lesson name</h1>
+        <div className="flex flex-col gap-0">
+          <div className="text-sm text-gray-500">Course "Hello World"</div>
+          <h1 className="text-2xl font-bold">{lesson?.name}</h1>
+        </div>
       </div>
     </div>
   );

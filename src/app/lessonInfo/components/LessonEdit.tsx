@@ -25,8 +25,6 @@ const LessonEdit = () => {
     }
   };
 
-  console.log({ markup });
-
   return (
     <div>
       <ReactQuill value={markup} onChange={setMarkup} theme="snow" />

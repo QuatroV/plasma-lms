@@ -6,8 +6,16 @@ export type SearchCourseInfo = Prisma.CourseGetPayload<{
   select: {
     id: true;
     name: true;
-    shortInfo: true;
     private: true;
+    CourseUser: {
+      select: {
+        user: {
+          select: {
+            name: true;
+          };
+        };
+      };
+    };
   };
 }>;
 

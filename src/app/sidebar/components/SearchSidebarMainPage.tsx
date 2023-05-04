@@ -1,5 +1,4 @@
 import { BsArrow90DegUp } from "react-icons/bs";
-import Button from "~/components/Button";
 import useSearchStore from "~/stores/searchStore";
 import SearchSidebarItem from "./SearchSidebarItem";
 

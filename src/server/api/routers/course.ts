@@ -9,10 +9,29 @@ import {
 export const courseRouter = createTRPCRouter({
   search: protectedProcedure
     .input(z.object({ phrase: z.string() }))
-    .query(({ input, ctx }) => {
-      return ctx.prisma.course.findMany({
+    .query(async ({ input, ctx }) => {
+      const courses = await ctx.prisma.course.findMany({
+        select: {
+          id: true,
+          name: true,
+          private: true,
+          CourseUser: {
+            select: {
+              user: {
+                select: {
+                  name: true,
+                },
+              },
+            },
+            where: {
+              courseRole: { equals: "OWNER" },
+            },
+          },
+        },
         where: { name: { contains: input.phrase } },
       });
+
+      return courses;
     }),
 
   shortInfo: protectedProcedure
@@ -26,6 +45,20 @@ export const courseRouter = createTRPCRouter({
           shortInfo: true,
           private: true,
           lessons: true,
+          CourseUser: {
+            select: {
+              courseRole: true,
+              user: {
+                select: {
+                  image: true,
+                  email: true,
+                  name: true,
+                  surname: true,
+                  role: true,
+                },
+              },
+            },
+          },
         },
       });
 
@@ -36,7 +69,7 @@ export const courseRouter = createTRPCRouter({
         },
       });
 
-      return { courseInfo, joined: !!courseUser };
+      return { courseInfo, courseUser };
     }),
 
   join: protectedProcedure
@@ -132,4 +165,57 @@ export const courseRouter = createTRPCRouter({
       take: 4,
     });
   }),
+
+  create: protectedProcedure.mutation(async ({ ctx }) => {
+    if (!ctx.session.user.id) {
+      throw new Error("No user id obtained from the context");
+    }
+
+    const newCourse = await ctx.prisma.course.create({
+      data: {
+        name: `${ctx.session.user.name}'s course`,
+      },
+    });
+
+    const courseOwner = await ctx.prisma.courseUser.create({
+      data: {
+        courseId: newCourse.id,
+        userId: ctx.session.user.id,
+        courseRole: "OWNER",
+      },
+    });
+
+    const courseWithOwner = await ctx.prisma.course.update({
+      where: {
+        id: newCourse.id,
+      },
+      data: {
+        CourseUser: { set: { id: courseOwner.id } },
+      },
+    });
+
+    return courseWithOwner;
+  }),
+
+  update: protectedProcedure
+    .input(
+      z.object({
+        id: z.string(),
+        name: z.string(),
+        shortInfo: z.string(),
+        private: z.union([z.boolean(), z.null()]),
+      })
+    )
+    .mutation(async ({ input, ctx }) => {
+      const updatedCourse = await ctx.prisma.course.update({
+        where: { id: input.id },
+        data: {
+          name: input.name,
+          shortInfo: input.shortInfo,
+          private: input.private,
+        },
+      });
+
+      return updatedCourse;
+    }),
 });

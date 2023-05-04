@@ -15,7 +15,7 @@ const SearchSidebarItems = () => {
 
   if (!searchResult.length && searchQuery.length) {
     return (
-      <div className="p-2 text-sm">
+      <div className="scrollbar flex-1 overflow-auto p-2 text-sm">
         <div className="flex flex-col items-center justify-center text-gray-500">
           <MdSearchOff size={50} />
           <hr className=" my-1 h-0.5 w-1/2 bg-gray-300" />
@@ -26,7 +26,7 @@ const SearchSidebarItems = () => {
   }
 
   return (
-    <div className="p-2 text-sm">
+    <div className="scrollbar flex-1 overflow-auto p-2 text-sm">
       {searchResult.map((item, idx) => (
         <SearchSidebarItem
           key={item.id}
