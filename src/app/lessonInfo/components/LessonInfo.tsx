@@ -1,4 +1,3 @@
-import { BiArrowBack } from "react-icons/bi";
 import LessonContent from "./LessonContent";
 import LessonInfoHeader from "./LessonInfoHeader";
 

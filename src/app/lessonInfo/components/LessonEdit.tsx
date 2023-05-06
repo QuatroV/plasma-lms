@@ -4,6 +4,7 @@ import Button from "~/components/Button";
 import "react-quill/dist/quill.snow.css";
 import { api } from "~/utils/api";
 import useLessonStore from "~/stores/lessonStore";
+import QuillJSModules from "../quilljs-modules";
 
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
@@ -27,7 +28,12 @@ const LessonEdit = () => {
 
   return (
     <div>
-      <ReactQuill value={markup} onChange={setMarkup} theme="snow" />
+      <ReactQuill
+        value={markup}
+        modules={QuillJSModules}
+        onChange={setMarkup}
+        theme="snow"
+      />
       <Button onClick={handleSave} className="mt-2 border border-gray-300 py-1">
         Save changes
       </Button>
