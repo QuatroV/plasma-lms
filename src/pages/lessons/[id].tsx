@@ -1,6 +1,8 @@
 import { GetServerSidePropsContext, type NextPage } from "next";
 import { useEffect } from "react";
+import LessonComments from "~/app/lessonComments/components/LessonComments";
 import LessonInfo from "~/app/lessonInfo/components/LessonInfo";
+import LessonTasks from "~/app/lessonTasks/components/LessonTasks";
 import useLessonStore from "~/stores/lessonStore";
 import usePagesStore from "~/stores/pageStore";
 import { api } from "~/utils/api";
@@ -10,8 +12,6 @@ type Props = {
 };
 
 const Lesson: NextPage<Props> = ({ lessonId }) => {
-  console.log({ lessonId });
-
   const setLesson = useLessonStore((state) => state.setLesson);
 
   const setCurrentPage = usePagesStore((state) => state.setCurrentPage);
@@ -26,7 +26,13 @@ const Lesson: NextPage<Props> = ({ lessonId }) => {
     }
   }, [lessonQuery.data]);
 
-  return <LessonInfo />;
+  return (
+    <main className="flex flex-auto flex-col gap-2 overflow-hidden p-2">
+      <LessonInfo />
+      <LessonTasks />
+      <LessonComments />
+    </main>
+  );
 };
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
