@@ -1,4 +1,4 @@
-import { type NextPage } from "next";
+import { GetServerSidePropsContext, type NextPage } from "next";
 import { useEffect } from "react";
 import LessonInfo from "~/app/lessonInfo/components/LessonInfo";
 import useLessonStore from "~/stores/lessonStore";
@@ -10,6 +10,8 @@ type Props = {
 };
 
 const Lesson: NextPage<Props> = ({ lessonId }) => {
+  console.log({ lessonId });
+
   const setLesson = useLessonStore((state) => state.setLesson);
 
   const setCurrentPage = usePagesStore((state) => state.setCurrentPage);
@@ -17,20 +19,23 @@ const Lesson: NextPage<Props> = ({ lessonId }) => {
   useEffect(() => setCurrentPage("course"));
 
   const lessonQuery = api.lesson.show.useQuery({ lessonId });
-  if (lessonQuery.data) {
-    setLesson(lessonQuery.data);
-  }
+
+  useEffect(() => {
+    if (lessonQuery.data) {
+      setLesson(lessonQuery.data);
+    }
+  }, [lessonQuery.data]);
 
   return <LessonInfo />;
 };
 
-Lesson.getInitialProps = async (context) => {
-  const { req } = context;
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const { params } = context;
 
-  const url = req ? req.url : "";
+  const lessonId =
+    Array.isArray(params) && params ? params.join("") : params?.id;
 
-  const lessonId = (url || "").split("/").pop();
-  return { lessonId: lessonId || "" };
-};
+  return { props: { lessonId } };
+}
 
 export default Lesson;
