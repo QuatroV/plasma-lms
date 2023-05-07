@@ -1,5 +1,6 @@
 import { signOut, useSession } from "next-auth/react";
 import { FiUser } from "react-icons/fi";
+import Settings from "~/app/settings/components/Settings";
 import Button from "~/components/Button";
 import useAuthStore from "~/stores/authStore";
 
@@ -16,7 +17,7 @@ const ProfileForm = () => {
   };
 
   return (
-    <div className="flex h-64 w-80 flex-col">
+    <div className="flex flex-col">
       <div>
         <div className="flex items-center gap-2">
           <FiUser size={40} />
@@ -28,6 +29,10 @@ const ProfileForm = () => {
 
         <div className="flex flex-row gap-4">
           <div className={`text-xl transition-all`}>Info</div>
+        </div>
+
+        <div className="flex flex-col gap-4">
+          <Settings />
         </div>
       </div>
       <Button className="mt-auto" onClick={handleLogOut}>
