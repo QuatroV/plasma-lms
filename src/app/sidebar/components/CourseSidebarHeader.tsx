@@ -1,5 +1,5 @@
-import SidebarHeaderTabs from "./SidebarHeaderTabs";
-import SidebarHeaderTitle from "./SidebarHeaderTitle";
+import SidebarHeaderTabs from "./CourseSidebarHeaderTabs";
+import SidebarHeaderTitle from "./CourseSidebarHeaderTitle";
 
 const SidebarHeader = () => {
   return (

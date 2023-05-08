@@ -60,7 +60,7 @@ const CourseInfo = (): JSX.Element | null => {
   }
 
   return (
-    <main className="flex h-full flex-1 flex-col gap-2 p-2">
+    <main className="flex h-full flex-1 flex-col gap-2 p-2 font-rubik">
       <CourseInfoHeader item={currentCourse} />
       <CourseInfoShortInfo shortInfo={currentCourse.shortInfo} />
       <div className="flex flex-initial gap-2">

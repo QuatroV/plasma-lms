@@ -23,7 +23,6 @@ const DefaultLayout = ({ className = "", children, ...other }: Props) => {
 
   const themeString = getBackgroundById(currentTheme || "classic");
 
-  console.log({ themeString });
   return (
     <>
       <Head>

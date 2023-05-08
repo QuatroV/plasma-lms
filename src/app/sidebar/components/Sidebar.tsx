@@ -12,7 +12,7 @@ const sidebarContent = {
 const Sidebar = () => {
   const currentPage = usePagesStore((state) => state.currentPage);
   return (
-    <div className=" h-full w-72 flex-none bg-gray-200">
+    <div className=" h-full w-80 flex-none bg-gray-200 font-rubik">
       {sidebarContent[currentPage]}
     </div>
   );

@@ -1,7 +1,7 @@
 import { BsFillPeopleFill } from "react-icons/bs";
 import { ImBook } from "react-icons/im";
 import { HiBookmark } from "react-icons/hi";
-import SidebarHeaderTab from "./SidebarHeaderTab";
+import SidebarHeaderTab from "./CourseSidebarHeaderTab";
 
 import { AiOutlineSearch } from "react-icons/ai";
 import usePagesStore from "~/stores/pageStore";

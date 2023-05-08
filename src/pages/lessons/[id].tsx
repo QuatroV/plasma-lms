@@ -27,7 +27,7 @@ const Lesson: NextPage<Props> = ({ lessonId }) => {
   }, [lessonQuery.data]);
 
   return (
-    <main className="flex flex-auto flex-col gap-2 overflow-hidden p-2">
+    <main className=" scrollbar flex flex-auto flex-col gap-2 overflow-auto p-2 font-rubik">
       <LessonInfo />
       <LessonTasks />
       <LessonComments />

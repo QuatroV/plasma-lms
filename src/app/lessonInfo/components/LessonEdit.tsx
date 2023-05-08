@@ -1,18 +1,25 @@
 import dynamic from "next/dynamic";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "~/components/Button";
 import "react-quill/dist/quill.snow.css";
 import { api } from "~/utils/api";
 import useLessonStore from "~/stores/lessonStore";
 import QuillJSModules from "../quilljs-modules";
 
-const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
+const ReactQuill = dynamic(() => import("react-quill"), {
+  ssr: false,
+  loading: () => <p>Loading ...</p>,
+});
 
 const LessonEdit = () => {
   const [markup, setMarkup] = useState("");
 
   const currentLesson = useLessonStore((state) => state.lesson);
   const setLesson = useLessonStore((state) => state.setLesson);
+
+  useEffect(() => {
+    setMarkup(currentLesson?.content || "");
+  }, [currentLesson?.content]);
 
   const editContentMutation = api.lesson.editContent.useMutation();
 
@@ -27,7 +34,7 @@ const LessonEdit = () => {
   };
 
   return (
-    <div>
+    <div className="">
       <ReactQuill
         value={markup}
         modules={QuillJSModules}

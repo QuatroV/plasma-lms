@@ -1,7 +1,7 @@
 import { StringMap } from "quill";
 
 const toolbarOptions = [
-  [{ header: [1, 2, 3, 4, 5, 6, false] }],
+  [{ header: [1, 2, 3, false] }],
   ["bold", "italic", "underline"], // toggled buttons
   ["blockquote", "code-block"],
 
