@@ -3,7 +3,7 @@ import { FaQuestion } from "react-icons/fa";
 const CourseSidebarTasksContent = () => {
   return (
     <div>
-      <div className=" my-1 ml-1 text-sm font-bold">Tasks:</div>
+      <div className=" my-1 ml-3 text-sm font-bold">Tasks:</div>
       <div className="relative flex cursor-pointer items-center gap-1 p-1 text-sm hover:bg-gray-300 active:shadow-inner">
         <FaQuestion /> Task 1
       </div>

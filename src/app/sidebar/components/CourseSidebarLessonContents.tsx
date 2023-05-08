@@ -27,8 +27,6 @@ const getStylesByHeaderType = (jsonElement: JsonElement) => {
 const renderHeadersTree = (
   jsonElement: JsonElement
 ): JSX.Element | undefined => {
-  console.log({ jsonElement });
-
   if (isHeaderTag(jsonElement)) {
     return jsonElement.text ? (
       <div
@@ -66,11 +64,9 @@ const CourseSidebarLessonContents = () => {
 
   const jsonLessonContent = parseHtmlToJson(doc.body);
 
-  console.log({ jsonLessonContent });
-
   return (
     <div className="">
-      <div className=" my-1 ml-1 text-sm font-bold">Lesson Contents:</div>
+      <div className=" my-1 ml-3 text-sm font-bold">Lesson Contents:</div>
       <div>{renderHeadersTree(jsonLessonContent)}</div>
     </div>
   );
