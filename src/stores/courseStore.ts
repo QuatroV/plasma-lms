@@ -8,7 +8,20 @@ export type CourseInfo = Prisma.CourseGetPayload<{
     name: true;
     shortInfo: true;
     private: true;
-    lessons: true;
+    lessons: {
+      select: {
+        id: true;
+        name: true;
+        content: true;
+        tasks: {
+          select: {
+            name: true;
+            content: true;
+            expectedResult: true;
+          };
+        };
+      };
+    };
   };
 }>;
 

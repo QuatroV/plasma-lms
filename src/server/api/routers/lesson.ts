@@ -8,6 +8,19 @@ export const lessonRouter = createTRPCRouter({
     .query(async ({ input, ctx }) => {
       const lesson = await ctx.prisma.lesson.findFirst({
         where: { id: input.lessonId },
+        select: {
+          courseId: true,
+          id: true,
+          name: true,
+          content: true,
+          tasks: {
+            select: {
+              name: true,
+              content: true,
+              expectedResult: true,
+            },
+          },
+        },
       });
       if (!lesson?.courseId) {
         throw new Error("No lesson courseId found");
@@ -18,7 +31,20 @@ export const lessonRouter = createTRPCRouter({
           name: true,
           shortInfo: true,
           private: true,
-          lessons: true,
+          lessons: {
+            select: {
+              id: true,
+              name: true,
+              content: true,
+              tasks: {
+                select: {
+                  name: true,
+                  content: true,
+                  expectedResult: true,
+                },
+              },
+            },
+          },
           CourseUser: {
             select: {
               courseRole: true,

@@ -5,6 +5,7 @@ import AuthModal from "../auth/components/AuthModal";
 import ProfileModal from "../auth/components/ProfileModal";
 import AddLessonModal from "../courseInfo/components/CreateLessonModal";
 import Header from "../header/Header";
+import TaskModal from "../lessonTasks/components/TaskModal";
 import useSettingStore from "../settings/stores/settingsStores";
 import { getBackgroundById } from "../settings/utils/themes";
 import Sidebar from "../sidebar/components/Sidebar";
@@ -31,6 +32,7 @@ const DefaultLayout = ({ className = "", children, ...other }: Props) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className={clsxm(themeString, "flex h-screen flex-col")}>
+        <TaskModal />
         <ProfileModal />
         <AuthModal />
         <AddLessonModal />

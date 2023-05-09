@@ -7,6 +7,13 @@ export type LessonInfo = Prisma.LessonGetPayload<{
     id: true;
     name: true;
     content: true;
+    tasks: {
+      select: {
+        name: true;
+        content: true;
+        expectedResult: true;
+      };
+    };
   };
 }>;
 

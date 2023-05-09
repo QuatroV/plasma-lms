@@ -87,12 +87,14 @@ model Lesson {
 }
 
 model Task {
-    id        String     @id @unique @default(cuid())
-    content   Json
-    solutions Solution[]
-    tests     Test[]
-    Lesson    Lesson?    @relation(fields: [lessonId], references: [id])
-    lessonId  String?
+    id             String     @id @unique @default(cuid())
+    name           String?
+    content        String
+    solutions      Solution[]
+    tests          Test[]
+    Lesson         Lesson?    @relation(fields: [lessonId], references: [id])
+    lessonId       String?
+    expectedResult String
 }
 
 model CourseUser {
