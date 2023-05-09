@@ -6,7 +6,37 @@ export const lessonRouter = createTRPCRouter({
   show: protectedProcedure
     .input(z.object({ lessonId: z.string() }))
     .query(async ({ input, ctx }) => {
-      return ctx.prisma.lesson.findFirst({ where: { id: input.lessonId } });
+      const lesson = await ctx.prisma.lesson.findFirst({
+        where: { id: input.lessonId },
+      });
+      if (!lesson?.courseId) {
+        throw new Error("No lesson courseId found");
+      }
+      const lessonCourse = await ctx.prisma.course.findFirst({
+        select: {
+          id: true,
+          name: true,
+          shortInfo: true,
+          private: true,
+          lessons: true,
+          CourseUser: {
+            select: {
+              courseRole: true,
+              user: {
+                select: {
+                  image: true,
+                  email: true,
+                  name: true,
+                  surname: true,
+                  role: true,
+                },
+              },
+            },
+          },
+        },
+        where: { id: lesson?.courseId },
+      });
+      return { lesson: lesson, course: lessonCourse };
     }),
 
   editContent: protectedProcedure

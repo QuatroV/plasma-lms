@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import LessonComments from "~/app/lessonComments/components/LessonComments";
 import LessonInfo from "~/app/lessonInfo/components/LessonInfo";
 import LessonTasks from "~/app/lessonTasks/components/LessonTasks";
+import useCourseStore from "~/stores/courseStore";
 import useLessonStore from "~/stores/lessonStore";
 import usePagesStore from "~/stores/pageStore";
 import { api } from "~/utils/api";
@@ -15,6 +16,8 @@ const Lesson: NextPage<Props> = ({ lessonId }) => {
   const setLesson = useLessonStore((state) => state.setLesson);
 
   const setCurrentPage = usePagesStore((state) => state.setCurrentPage);
+  const setCurrentCourse = useCourseStore((state) => state.setCurrentCourse);
+  const setUsers = useCourseStore((state) => state.setUsers);
 
   useEffect(() => setCurrentPage("course"));
 
@@ -22,7 +25,18 @@ const Lesson: NextPage<Props> = ({ lessonId }) => {
 
   useEffect(() => {
     if (lessonQuery.data) {
-      setLesson(lessonQuery.data);
+      const { lesson, course } = lessonQuery.data;
+      if (course) {
+        setUsers(
+          course.CourseUser.map((courseUser) => ({
+            user: courseUser.user,
+            courseRole: courseUser.courseRole,
+          }))
+        );
+        setCurrentCourse(course);
+      }
+
+      setLesson(lesson);
     }
   }, [lessonQuery.data]);
 

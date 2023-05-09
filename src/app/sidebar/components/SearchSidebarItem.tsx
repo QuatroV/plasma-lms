@@ -31,6 +31,9 @@ const SearchSidebarItem = ({ isFirst, isLast, item }: Props) => {
   const isCurrentltySelected = currentCourseId === item.id;
 
   const handleClick = () => {
+    if (isCurrentltySelected) {
+      return;
+    }
     setEditMode(false);
     setCurrentCourse({ ...item, shortInfo: "", lessons: [] });
     setEditedCurrentCourse({ ...item, shortInfo: "", lessons: [] });

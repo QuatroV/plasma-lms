@@ -1,11 +1,16 @@
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 
-type Page = "search" | "course" | "lesson";
+export type Page = "search" | "course" | "lesson";
+
+export type LessonSubPage = "lesson" | "course" | "people";
 
 interface pagesState {
   currentPage: Page;
   setCurrentPage: (currentPage: Page) => void;
+
+  lessonSubPage: LessonSubPage;
+  setLessonSubPage: (lessonSubPage: LessonSubPage) => void;
 }
 
 const usePagesStore = create<pagesState>()(
@@ -14,6 +19,9 @@ const usePagesStore = create<pagesState>()(
     setCurrentPage(currentPage) {
       set({ currentPage });
     },
+
+    lessonSubPage: "lesson",
+    setLessonSubPage: (lessonSubPage) => set({ lessonSubPage }),
   }))
 );
 

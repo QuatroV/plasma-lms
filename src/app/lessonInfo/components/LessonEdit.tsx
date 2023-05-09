@@ -5,6 +5,7 @@ import "react-quill/dist/quill.snow.css";
 import { api } from "~/utils/api";
 import useLessonStore from "~/stores/lessonStore";
 import QuillJSModules from "../quilljs-modules";
+import { addUniqueIdsToHeaders } from "../utils/parse";
 
 const ReactQuill = dynamic(() => import("react-quill"), {
   ssr: false,
@@ -25,12 +26,17 @@ const LessonEdit = () => {
 
   const handleSave = () => {
     if (currentLesson?.id) {
+      const editedMarkup = addUniqueIdsToHeaders(markup);
       editContentMutation.mutate({
         lessonId: currentLesson.id,
-        content: markup,
+        content: editedMarkup,
       });
       setLesson({ ...currentLesson, content: markup });
     }
+  };
+
+  const handleChange = (markup: string) => {
+    setMarkup(markup);
   };
 
   return (
@@ -38,7 +44,7 @@ const LessonEdit = () => {
       <ReactQuill
         value={markup}
         modules={QuillJSModules}
-        onChange={setMarkup}
+        onChange={handleChange}
         theme="snow"
       />
       <Button onClick={handleSave} className="mt-2 border border-gray-300 py-1">

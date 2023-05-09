@@ -2,7 +2,6 @@ import useLessonStore from "~/stores/lessonStore";
 import clsxm from "~/utils/clsxm";
 import { JsonElement, parseHtmlToJson } from "~/utils/HTMLtoJSON";
 import { RxBookmarkFilled, RxBookmark } from "react-icons/rx";
-import { GoBookmark } from "react-icons/go";
 import { AiFillStar } from "react-icons/ai";
 
 const isHeaderTag = (jsonElement: JsonElement) => {
@@ -28,8 +27,16 @@ const renderHeadersTree = (
   jsonElement: JsonElement
 ): JSX.Element | undefined => {
   if (isHeaderTag(jsonElement)) {
+    console.log({ jsonElement });
+    const handleHeaderClick = () => {
+      document
+        .querySelector(`#${jsonElement.id}`)
+        ?.scrollIntoView({ behavior: "smooth" });
+    };
+
     return jsonElement.text ? (
       <div
+        onClick={handleHeaderClick}
         className={clsxm(
           getStylesByHeaderType(jsonElement),
           "relative flex cursor-pointer items-center gap-1 p-1 text-sm hover:bg-gray-300 active:shadow-inner"
